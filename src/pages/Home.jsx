@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { workoutPlan } from '../data/workoutPlan';
 import { motion } from 'framer-motion';
-import { Play, Calendar, ChevronRight } from 'lucide-react';
+import { Play, Calendar, ChevronRight, Droplet, Activity, CheckCircle2 } from 'lucide-react';
 import SlimFitCountdown from '../components/SlimFitCountdown';
 import SlimFitInfo from '../components/SlimFitInfo';
 
@@ -30,6 +30,34 @@ const Home = () => {
 
   const progress = getProgress();
 
+  const [habits, setHabits] = React.useState(() => {
+    const today = new Date().toISOString().split('T')[0];
+    const saved = localStorage.getItem(`habits-${today}`);
+    return saved ? JSON.parse(saved) : { water: false, cardio: false };
+  });
+
+  const toggleHabit = (type) => {
+    setHabits(prev => {
+      const updated = { ...prev, [type]: !prev[type] };
+      const today = new Date().toISOString().split('T')[0];
+      localStorage.setItem(`habits-${today}`, JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  const quotes = [
+    "Kỷ luật là tự do.",
+    "Day 1 or One Day? You decide.",
+    "Đừng bỏ cuộc vì những gì bạn đã bắt đầu.",
+    "Mồ hôi hôm nay, nụ cười ngày mai.",
+    "Không có lý do, chỉ có kết quả."
+  ];
+
+  const dailyQuote = useMemo(() => {
+    const index = new Date().getDay() % quotes.length;
+    return quotes[index];
+  }, []);
+
   return (
     <motion.div 
       initial={{ opacity: 0 }} 
@@ -38,9 +66,9 @@ const Home = () => {
     >
       <header className="dashboard-header">
         <h2 style={{ fontSize: '0.9rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-          Transformation Journey
+          Mindset
         </h2>
-        <h1 style={{ fontSize: '2.25rem', marginTop: '0.25rem', fontWeight: 900 }}>Road to Slim Fit ⚡️</h1>
+        <h1 style={{ fontSize: '2rem', marginTop: '0.25rem', fontWeight: 900 }}>"{dailyQuote}"</h1>
       </header>
 
       <SlimFitCountdown />
@@ -86,6 +114,53 @@ const Home = () => {
               Hôm nay là ngày nghỉ. Hãy phục hồi tốt để chuẩn bị cho buổi tiếp theo!
             </div>
           )}
+        </div>
+      </div>
+
+      <div style={{ padding: '0 1.5rem', marginBottom: '1.5rem' }}>
+        <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>Thói quen hôm nay</h3>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+          <div 
+            onClick={() => toggleHabit('water')}
+            style={{ 
+              background: habits.water ? 'var(--accent-soft)' : '#161616', 
+              border: `1px solid ${habits.water ? 'var(--accent)' : 'rgba(255,255,255,0.05)'}`,
+              padding: '1rem', 
+              borderRadius: '16px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              cursor: 'pointer'
+            }}
+          >
+            <div style={{ background: habits.water ? 'var(--accent)' : '#222', borderRadius: '50%', padding: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              {habits.water ? <CheckCircle2 size={16} color="#000" /> : <Droplet size={16} color="#4d9eff" />}
+            </div>
+            <div>
+              <p style={{ fontWeight: 700, fontSize: '0.9rem', color: habits.water ? '#fff' : 'var(--text-main)' }}>3 Lít Nước</p>
+            </div>
+          </div>
+
+          <div 
+            onClick={() => toggleHabit('cardio')}
+            style={{ 
+              background: habits.cardio ? 'var(--accent-soft)' : '#161616', 
+              border: `1px solid ${habits.cardio ? 'var(--accent)' : 'rgba(255,255,255,0.05)'}`,
+              padding: '1rem', 
+              borderRadius: '16px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              cursor: 'pointer'
+            }}
+          >
+            <div style={{ background: habits.cardio ? 'var(--accent)' : '#222', borderRadius: '50%', padding: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              {habits.cardio ? <CheckCircle2 size={16} color="#000" /> : <Activity size={16} color="#ff4d4d" />}
+            </div>
+            <div>
+              <p style={{ fontWeight: 700, fontSize: '0.9rem', color: habits.cardio ? '#fff' : 'var(--text-main)' }}>20p Cardio</p>
+            </div>
+          </div>
         </div>
       </div>
 
