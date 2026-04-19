@@ -37,6 +37,7 @@ const Home = () => {
   });
 
   const toggleHabit = (type) => {
+    if (window.navigator?.vibrate) window.navigator.vibrate(50);
     setHabits(prev => {
       const updated = { ...prev, [type]: !prev[type] };
       const today = new Date().toISOString().split('T')[0];
@@ -120,47 +121,61 @@ const Home = () => {
       <div style={{ padding: '0 1.5rem', marginBottom: '1.5rem' }}>
         <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>Thói quen hôm nay</h3>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-          <div 
+          <motion.div 
+            whileTap={{ scale: 0.95 }}
             onClick={() => toggleHabit('water')}
             style={{ 
-              background: habits.water ? 'var(--accent-soft)' : '#161616', 
-              border: `1px solid ${habits.water ? 'var(--accent)' : 'rgba(255,255,255,0.05)'}`,
+              background: habits.water ? 'var(--accent-soft)' : 'rgba(25, 25, 25, 0.4)',
+              backdropFilter: 'blur(12px)',
+              border: `1px solid ${habits.water ? 'var(--accent)' : 'rgba(255,255,255,0.08)'}`,
               padding: '1rem', 
               borderRadius: '16px',
               display: 'flex',
               alignItems: 'center',
               gap: '0.75rem',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              boxShadow: habits.water ? '0 0 20px rgba(204,255,0,0.1)' : '0 4px 20px rgba(0,0,0,0.2)'
             }}
           >
-            <div style={{ background: habits.water ? 'var(--accent)' : '#222', borderRadius: '50%', padding: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <motion.div 
+              initial={false}
+              animate={{ rotate: habits.water ? 360 : 0 }}
+              style={{ background: habits.water ? 'var(--accent)' : '#222', borderRadius: '50%', padding: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            >
               {habits.water ? <CheckCircle2 size={16} color="#000" /> : <Droplet size={16} color="#4d9eff" />}
-            </div>
+            </motion.div>
             <div>
               <p style={{ fontWeight: 700, fontSize: '0.9rem', color: habits.water ? '#fff' : 'var(--text-main)' }}>3 Lít Nước</p>
             </div>
-          </div>
+          </motion.div>
 
-          <div 
+          <motion.div 
+            whileTap={{ scale: 0.95 }}
             onClick={() => toggleHabit('cardio')}
             style={{ 
-              background: habits.cardio ? 'var(--accent-soft)' : '#161616', 
-              border: `1px solid ${habits.cardio ? 'var(--accent)' : 'rgba(255,255,255,0.05)'}`,
+              background: habits.cardio ? 'var(--accent-soft)' : 'rgba(25, 25, 25, 0.4)',
+              backdropFilter: 'blur(12px)',
+              border: `1px solid ${habits.cardio ? 'var(--accent)' : 'rgba(255,255,255,0.08)'}`,
               padding: '1rem', 
               borderRadius: '16px',
               display: 'flex',
               alignItems: 'center',
               gap: '0.75rem',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              boxShadow: habits.cardio ? '0 0 20px rgba(204,255,0,0.1)' : '0 4px 20px rgba(0,0,0,0.2)'
             }}
           >
-            <div style={{ background: habits.cardio ? 'var(--accent)' : '#222', borderRadius: '50%', padding: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <motion.div 
+              initial={false}
+              animate={{ rotate: habits.cardio ? 360 : 0 }}
+              style={{ background: habits.cardio ? 'var(--accent)' : '#222', borderRadius: '50%', padding: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            >
               {habits.cardio ? <CheckCircle2 size={16} color="#000" /> : <Activity size={16} color="#ff4d4d" />}
-            </div>
+            </motion.div>
             <div>
               <p style={{ fontWeight: 700, fontSize: '0.9rem', color: habits.cardio ? '#fff' : 'var(--text-main)' }}>20p Cardio</p>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 
@@ -170,37 +185,46 @@ const Home = () => {
         </h3>
       </div>
 
-      <div className="weekly-grid">
+      <div className="horizontal-scroll">
         {workoutPlan.map((day) => (
           <motion.div
             key={day.id}
-            whileTap={{ scale: 0.98 }}
+            whileTap={{ scale: 0.95 }}
             className={`week-day-row ${day.id === todayId ? 'active' : ''}`}
             onClick={() => navigate(`/workout/${day.id}`)}
+            style={{ 
+              background: day.id === todayId ? 'var(--accent-soft)' : 'rgba(25, 25, 25, 0.4)',
+              backdropFilter: 'blur(12px)',
+              border: `1px solid ${day.id === todayId ? 'var(--accent)' : 'rgba(255,255,255,0.08)'}`,
+              flexDirection: 'column', 
+              alignItems: 'flex-start',
+              padding: '1.25rem',
+              boxShadow: '0 8px 32px rgba(0,0,0,0.15)'
+            }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', marginBottom: '1rem' }}>
               <div style={{ 
                 width: '40px', 
                 height: '40px', 
-                borderRadius: '10px', 
-                background: day.id === todayId ? 'var(--accent)' : '#1e2124',
+                borderRadius: '12px', 
+                background: day.id === todayId ? 'var(--accent)' : 'rgba(255,255,255,0.05)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: day.id === todayId ? '#000' : 'var(--text-muted)',
+                color: day.id === todayId ? '#000' : 'var(--text-main)',
                 fontWeight: 800,
-                fontSize: '0.8rem'
+                fontSize: '0.85rem'
               }}>
                 {day.day.split(' ')[1]}
               </div>
-              <div>
-                <p style={{ fontWeight: 700, fontSize: '1rem', color: day.id === todayId ? '#fff' : 'var(--text-main)' }}>
-                  {day.type.split(' ')[0]} {day.type.split(' ')[1]}...
-                </p>
-                <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{day.exercises.length} bài tập</p>
-              </div>
+              <ChevronRight size={18} color={day.id === todayId ? 'var(--accent)' : 'var(--text-muted)'} />
             </div>
-            <ChevronRight size={18} color="var(--text-muted)" />
+            <div>
+              <p style={{ fontWeight: 800, fontSize: '1.05rem', color: day.id === todayId ? '#fff' : 'var(--text-main)' }}>
+                {day.type.split(' ')[0]} {day.type.split(' ')[1]}
+              </p>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>{day.exercises.length} bài tập</p>
+            </div>
           </motion.div>
         ))}
       </div>

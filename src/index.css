@@ -77,14 +77,16 @@ h1, h2, h3 {
   border-radius: 8px;
 }
 
-/* Cards */
+/* Cards & Glassmorphism */
 .card {
-  background: var(--card-bg);
+  background: rgba(25, 25, 25, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: var(--border-radius-lg);
   padding: 1.25rem;
   margin-bottom: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 /* Home / Dashboard */
@@ -131,12 +133,30 @@ h1, h2, h3 {
   box-shadow: 0 0 10px var(--accent);
 }
 
+/* Horizontal Scrolling */
+.horizontal-scroll {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  gap: 1rem;
+  padding: 0 1.5rem 1rem;
+  margin: 0 -1.5rem; /* Break out of container */
+  scrollbar-width: none;
+}
+.horizontal-scroll::-webkit-scrollbar {
+  display: none;
+}
+.horizontal-scroll > * {
+  scroll-snap-align: center;
+  flex: 0 0 85%;
+}
+
 /* Weekly Plan */
 .weekly-grid {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  padding: 0 1.5rem;
 }
 
 .week-day-row {
@@ -397,12 +417,15 @@ h1, h2, h3 {
 }
 
 .info-card {
-  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   padding: 1.5rem;
   border-radius: 24px;
   margin-bottom: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-left: 4px solid var(--accent);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
 }
 
 .info-title {
@@ -474,4 +497,22 @@ h1, h2, h3 {
   right: -150px;
   background: #00e676;
   opacity: 0.15;
+}
+
+/* Sticky Bottom Bar */
+.sticky-bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  padding: 1.5rem 1.5rem 2rem;
+  background: linear-gradient(to top, rgba(12, 12, 12, 0.95) 40%, rgba(12, 12, 12, 0));
+  pointer-events: none;
+  z-index: 100;
+}
+.sticky-bottom-bar > button {
+  pointer-events: auto;
+  box-shadow: 0 10px 40px rgba(204, 255, 0, 0.2);
 }

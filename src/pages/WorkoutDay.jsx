@@ -119,6 +119,7 @@ const WorkoutDay = () => {
     }));
 
     if (!isDone) {
+      if (window.navigator?.vibrate) window.navigator.vibrate(30);
       startTimer(90);
       saveToHistory(exId, reps, kg);
     }
@@ -258,8 +259,22 @@ const WorkoutDay = () => {
         );
       })}
 
-      <div style={{ padding: '2rem 1.5rem' }}>
-        <button className="btn-primary" onClick={() => setShowUndo(true)}>
+      <div className="sticky-bottom-bar">
+        <button 
+          className="btn-primary" 
+          onClick={() => {
+            if (window.navigator?.vibrate) window.navigator.vibrate([100, 50, 100]);
+            import('canvas-confetti').then((confetti) => {
+              confetti.default({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#ccff00', '#00e676', '#ffffff']
+              });
+            });
+            setShowUndo(true);
+          }}
+        >
           HOÀN THÀNH BUỔI TẬP
         </button>
       </div>
