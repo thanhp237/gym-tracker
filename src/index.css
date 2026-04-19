@@ -338,3 +338,140 @@ h1, h2, h3 {
   height: 100%;
   object-fit: contain;
 }
+
+/* New Slim Fit Styles */
+.slim-fit-banner {
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+  padding: 1.5rem;
+  border-radius: var(--border-radius-xl);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin: 1rem 1.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.slim-fit-banner::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: -10%;
+  width: 100px;
+  height: 100px;
+  background: var(--accent);
+  filter: blur(60px);
+  opacity: 0.15;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.stat-item {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1.25rem 1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-value {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 0.5rem;
+  font-weight: 600;
+}
+
+.info-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+  padding: 1.5rem;
+  border-radius: 24px;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-left: 4px solid var(--accent);
+}
+
+.info-title {
+  font-weight: 800;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.1rem;
+}
+
+.info-list {
+  list-style: none;
+  font-size: 0.95rem;
+  color: var(--text-main);
+}
+
+.info-list li {
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.info-list li strong {
+  color: #fff;
+}
+
+.info-list li::before {
+  content: '•';
+  color: var(--accent);
+  font-weight: bold;
+}
+
+/* Background Blobs */
+.bg-blobs {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  filter: blur(100px);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.blob-1 {
+  width: 300px;
+  height: 300px;
+  top: -100px;
+  left: -100px;
+  background: var(--accent);
+  opacity: 0.2;
+}
+
+.blob-2 {
+  width: 400px;
+  height: 400px;
+  bottom: -150px;
+  right: -150px;
+  background: #00e676;
+  opacity: 0.15;
+}
